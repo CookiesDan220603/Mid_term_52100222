@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<th:block th:insert="~{fragments/heading :: heading(title = 'Login')}"/>
+<body>
+<h1>This is login page</h1>
+<!-- new -->
+<div class="container">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="bs-component">
+                    <form method="post" th:action="@{/login}" id="formSignIn">
+                        <fieldset>
+                            <legend>Sign in</legend>
+
+                            <div class="form-group">
+                                <label for="username" class="form-label mt-4">Username</label>
+                                <input id="username" type="text" class="form-control" name="username"
+                                       placeholder="Username" required autofocus>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password" class="form-label mt-4">Password</label>
+                                <input id="password" type="password" class="form-control" name="password"
+                                       placeholder="Password" required>
+                            </div>
+
+                            <br class="mt-4">
+
+                            <button type="submit" class="btn btn-primary">Sign In</button>
+
+                            <!-- param -->
+                            <div th:if="${param.error}" class="mt-4 alert alert-danger">
+                                Invalid username and password.
+                            </div>
+                            <div th:if="${param.logout}" class="mt-4 alert alert-success">
+                                You have been logged out.
+                            </div>
+                            <!-- param -->
+                        </fieldset>
+                    </form>
+                </div>
+                <a href="/register" class="btn btn-primary"> You don't have account ? Sign up now !</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/webjars/jquery/3.6.4/jquery.js}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        const formSignIn = $("#formSignIn")
+        formSignIn.on("submit", function (e) {
+            e.preventDefault()
+            const username = $("#username")
+            const password = $("#password")
+            $.ajax({
+                url: "/login",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(
+                    {
+                        "username": username.val(),
+                        "password": password.val()
+                    }),
+                success: function (data) {
+                    localStorage.setItem("token", data.token);
+                    localStorage.setItem("username", data.username);
+                    window.location.href = "/"
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>

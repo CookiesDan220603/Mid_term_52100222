@@ -1,0 +1,18 @@
+INSERT INTO category (id, name, description, created_date, updated_date)
+VALUES
+    ('1', 'Điện thoại', 'Mô tả điện thoại', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('2', 'Máy tính bảng', 'Mô tả máy tính bảng', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('3', 'Laptop', 'Mô tả laptop', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
+INSERT INTO product (id, name, description, price, quantity, image, brand, color, category_id)
+VALUES
+    ('1', 'iPhone 12', 'Flagship smartphone from Apple', 999.99, 50, 'iphone12.jpg', 'Apple', 'Black', '1'),
+    ('2', 'Samsung Galaxy Tab S7', 'High-performance tablet from Samsung', 699.99, 30, 'galaxytabs7.jpg', 'Samsung', 'Silver', '2'),
+    ('3', 'Dell XPS 13', 'Ultra-portable laptop with powerful performance', 1299.99, 20, 'xps13.jpg', 'Dell', 'Silver', '1'),
+    ('4', 'Logitech G502 Hero', 'High-precision gaming mouse', 79.99, 10, 'g502hero.jpg', 'Logitech', 'Black', '3'),
+    ('5', 'Sony WH-1000XM4', 'Noise-canceling wireless headphones', 349.99, 15, 'wh1000xm4.jpg', 'Sony', 'Black', '2');
+
+
+
+

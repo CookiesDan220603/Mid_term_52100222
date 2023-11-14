@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css}">
+<head>
+    <a class="h2" th:href="@{/product}">Quay lại sản </a>
+    <title>Chi tiết sản phẩm</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css}">
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.25rem;
+            color: #555;
+            margin-bottom: 0.5rem;
+        }
+
+        #product-name {
+            font-weight: bold;
+        }
+
+        #add-to-cart-btn {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.25rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+
+
+<div class="container my-4">
+    <h1 class="text-center mb-4">Thông tin sản phẩm</h1>
+    <div class="row justify-content-center productDetail">
+
+    </div>
+</div>
+<script th:src="@{/webjars/jquery/3.6.4/jquery.js}"></script>
+
+<script type="text/javascript">
+    // document.getElementById("add-to-cart-btn").addEventListener("click", function(){
+    //   window.location.href = "/cart";
+    // });
+    $(document).ready(function () {
+        const TOKEN = localStorage.getItem("token");
+       const USER_NAME = localStorage.getItem("username");
+
+        $.ajax({
+            url: "/product/get/" + window.location.pathname.split("/")[2],
+            type: "GET",
+            data: {
+                id: window.location.pathname.split("/")[2],
+            },
+            async: true,
+            contentType: "application/json",
+            success: function (data) {
+                console.log(data);
+                id_product = data.id;
+                console.log(id_product)
+                const template = `
+          <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-text">Ten sản phẩm: <span id="product-name">${data.name}</span></h5>
+          <p class="card-text">Mô tả: <span id="product-description">${data.description}</span></p>
+          <p class="card-text">Giá: <span id="product-price">${data.price}</span></p>
+          <button id="add-to-cart-btn" class="btn btn-primary">Thêm vào giỏ hàng</button>
+        </div>
+      </div>
+    </div>
+        `;
+                $(".productDetail").html(template);
+                $("#add-to-cart-btn").on('click', function (e) {
+                    e.preventDefault();
+                    console.log(id_product)
+                    const data = {
+                        productIds: [
+                            id_product
+                        ],
+                        username: USER_NAME
+
+                    }
+                    console.log("click add to cart")
+                    $.ajax({
+                        url: "/cart/add",
+                        type: "POST",
+                        data: JSON.stringify(data),
+                        async: true,
+                        contentType: "application/json",
+                        success: function () {
+                            console.log("success");
+                            alert("Thêm vào giỏ hàng thành công");
+                        },
+                        error: function (e) {
+                            console.log(e)
+                            console.log("error");
+                        }
+                    })
+                });
+            },
+            error: function (e) {
+                console.log("error");
+            }
+        })
+    });
+</script>
+</body>
+</html>

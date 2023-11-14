@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:insert="~{fragments/heading :: heading(title = 'Products')}"/>
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css}">
+<body>
+
+<a class="h2" th:href="@{/}">Trang chủ</a>
+<div class="row justify-content-center mt-3">
+    <div class="col-lg-6 col-md-8 col-sm-10">
+        <form class="d-flex justify-content-center">
+            <div class="input-group">
+                <select name="category" class="form-control rounded-0">
+                    <option value="">Category</option>
+                    <option value="phone">Điện thoại</option>
+                    <option value="laptop">Laptop</option>
+                    <option value="tablet">Máy tính bảng</option>
+                </select>
+                <select name="price" class="form-control rounded-0">
+                    <option value="">Price</option>
+                    <option value="0-5000000">Dưới 5 triệu</option>
+                    <option value="5000000-10000000">Từ 5 đến 10 triệu</option>
+                    <option value="10000000-20000000">Từ 10 đến 20 triệu</option>
+                    <option value="20000000-">Trên 20 triệu</option>
+                </select>
+
+                <button type="button" class="btn btn-primary rounded-0" data-bs-toggle="modal" data-bs-target="#filterData">Lọc</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row productsList mt-4">
+</div>
+
+<div class="modal" id="filterData">
+    <div class=" modal-dialog  modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Filter Data</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form>
+
+
+                    <div class="mb-3">
+                        <p class="fw-bold fs-5 m-1">Color</p>
+                        <th:block th:each="color : ${colors}">
+                            <div class="form-check form-check-inline ml-2 ">
+                                <input class="form-check-input" type="checkbox" name="color" th:id="${color}"
+                                       th:value="${color}">
+                                <label th:text="${color}" class="form-check-label" th:for="${color}">
+                                </label>
+                            </div>
+                        </th:block>
+                    </div>
+
+                    <div class="mb-3">
+                        <p class="fw-bold fs-5 m-1">Price</p>
+                        <div class="form-group">
+                            <label for="minPrice" class="form-label">Min Price <span
+                                    class="badge bg-secondary">$<span id="minPriceVal">0</span></span>
+                            </label>
+                            <input type="range" class="form-range" min="0" id="minPrice" value="0" max="300">
+
+                            <label for="maxPrice" class="form-label">Max Price
+
+                                <span
+                                        class="badge bg-secondary">$<span id="maxPriceVal">0</span></span>
+                            </label>
+                            <input type="range" class="form-range" min="0" max="300" id="maxPrice" value="0">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <p class="fw-bold fs-5 m-1">Brand</p>
+                        <th:block th:each="brand : ${brands}">
+                            <div class="form-check form-check-inline ml-2">
+                                <input class="form-check-input" name="brand" type="checkbox" th:value="${brand}"
+                                       th:id="${brand}">
+                                <label th:text="${brand}" class="form-check-label" th:for="${brand}">
+                                </label>
+                            </div>
+                        </th:block>
+                    </div>
+
+                    <div class="mb-3">
+                        <p class="fw-bold fs-5 m-1">Category</p>
+                        <th:block th:each="category : ${categories}">
+                            <input class="form-check-input" name="brand" type="checkbox"
+                                   th:value="${category.name}" th:id="${category.id}">
+                            <label th:text="${category.name}" class="form-check-label" th:for="${category.id}">
+                            </label>
+                        </th:block>
+                        <div class="form-check form-check-inline ml-2">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-dark btn-filter" data-bs-dismiss="modal">Filter</button>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<script th:src="@{/webjars/jquery/3.6.4/jquery.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+<script>
+    var productsList = $(".productsList");
+    $(document).ready(function () {
+        $("#minPrice").on('change', function (e) {
+            const minPrice = $(this).val();
+            const maxPrice = $("#maxPrice").val();
+            if (minPrice !== '' && maxPrice !== '') {
+                console.log("minPrice: " + minPrice);
+                console.log("maxPrice: " + maxPrice);
+                if (parseInt(minPrice) < parseInt(maxPrice)) {
+                    $("#minPriceVal").text(minPrice);
+                }
+            }
+        })
+
+        $("#maxPrice").on('change', function (e) {
+            const minPrice = $("#minPrice").val();
+            const maxPrice = $(this).val();
+            if (minPrice !== '' && maxPrice !== '') {
+                console.log("minPrice: " + minPrice);
+                console.log("maxPrice: " + maxPrice);
+                if (parseInt(minPrice) < parseInt(maxPrice)) {
+                    $("#maxPriceVal").text(maxPrice);
+                }
+            }
+        })
+
+        $.ajax({
+            url: "/product/get",
+            type: "POST",
+            dataType: "json",
+            async: true,
+            contentType: "application/json",
+            success: function (data) {
+                console.log(data);
+                const template = data.map((product) => {
+                    return `
+                        <div class="card productCart" style="width: 18rem;" data-id="${product.id}">
+                          <div class="card-body">
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="card-text">${product.description}</p>
+                          </div>
+                    </div>
+                    `;
+                })
+                productsList.html(template);
+                clickProduct();
+            },
+            error: function (e) {
+                console.log("error");
+            }
+        })
+
+        $(".btn-filter").click(function (e) {
+            e.preventDefault();
+
+            const colors = $("input[name='color']:checked").map(function () {
+                return this.value;
+            });
+
+            const brands = $("input[name='brand']:checked").map(function () {
+                return this.value;
+            });
+
+            console.log(colors.get());
+            console.log(brands.get());
+
+            const minPrice = $("#minPrice").val();
+            const maxPrice = $("#maxPrice").val();
+            let url = '?filter=';
+            if (colors.get().length !== 0) {
+                url += `colors:${colors.get()}`;
+            }
+            if (brands.get().length !== 0) {
+                if (colors.get().length !== 0) {
+                    url += `;brands:${brands.get()}`;
+                } else {
+                    url += `brands:${brands.get()}`;
+                }
+            }
+            if (minPrice !== '' && minPrice !== '0') {
+                if (url.endsWith('filter=')) {
+                    url += `price:${minPrice}`;
+                } else if (url.endsWith(';')) {
+                    url += `price:${minPrice}`;
+                } else {
+                    url += `;price:${minPrice}`;
+                }
+            }
+
+            if (maxPrice !== '' && maxPrice !== '0') {
+                if (url.endsWith('filter=')) {
+                    url += `price:-${maxPrice}`;
+                } else if (
+                    url.endsWith(';') ||
+                    url.endsWith(`price:${minPrice}`)
+                ) {
+                    url += `-${maxPrice}`;
+                }
+            }
+            console.log(url)
+            $.ajax({
+                url: `/product/filter${url}`,
+                type: "GET",
+                dataType: "json",
+                async: true,
+                contentType: "application/json",
+                success: function (data) {
+                    console.log(data);
+                    const template = data.map((product) => {
+                        return `
+                        <div class="card productCart" style="width: 18rem;" data-id="${product.id}">
+                          <div class="card-body">
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="card-text">${product.description}</p>
+                          </div>
+                    </div>
+                    `;
+                    })
+                    productsList.html(template);
+                    clickProduct();
+                },
+                error: function (e) {
+                    console.log(e.responseText);
+                    console.log("error");
+                }
+            })
+        })
+        function clickProduct() {
+            $('.productCart').on('click', function (e) {
+                console.log('click product');
+                console.log($(this));
+                console.log($(this).data('id'));
+                window.location.href = '/product/' + $(this).data('id');
+            });
+        }
+    })
+</script>
+</body>
+</html>

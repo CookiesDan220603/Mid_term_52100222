@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:insert="~{fragments/heading :: heading(title = 'Cart')}"/>
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css}">
+
+<body>
+<a th:href="@{/}">Back to home</a>
+  <div class="row cartItems mt-4">
+  </div>
+<a class="btn btn-outline-primary" th:href="@{/product}">Update Cart</a>
+  <script th:src="@{/webjars/jquery/3.6.4/jquery.js}"></script>
+  <script th:src="@{/js/cartDetail.js}"></script>
+<script>
+  $(document).ready(function() {
+    const TOKEN = localStorage.getItem("token");
+    let id_user;
+
+    // $.ajax({
+    //   url: "/api/user/get_user_by_token",
+    //   type: "POST",
+    //   contentType: "application/json",
+    //   data: TOKEN,
+    //   success: function (data) {
+    //     console.log(data);
+    //     id_user = data.id;
+    //   },
+    //   error: function (error) {
+    //     console.log(error);
+    //   },
+    //   async: true
+    // })
+
+    $.ajax({
+      url: "/api/user/get_user_by_token",
+      type: "POST",
+      data: id_user,
+      async: true,
+      contentType: "application/json",
+      success: function(data) {
+        console.log(data);
+        const template = data.map((cartItem) => {
+          return `
+            <div class="card productCart" style="width: 18rem;" data-id="${cartItem.id}">
+              <div class="card-body">
+                <h5 class="card-title">${cartItem.name}</h5>
+                <p class="card-text">${cartItem.description}</p>
+                <p class="card-text">${cartItem.price}</p>
+                <p class="card-text">${cartItem.quantity}</p>
+              </div>
+            </div>
+            `;
+        })
+        $(".cartItems").html(template);
+      },
+      error: function(e) {
+        console.log("error");
+      }
+    })
+
+  })
+</script>
+</body>
+</html>
