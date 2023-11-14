@@ -7,12 +7,25 @@ VALUES
 
 INSERT INTO product (id, name, description, price, quantity, image, brand, color, category_id)
 VALUES
-    ('1', 'iPhone 12', 'Flagship smartphone from Apple', 999.99, 50, 'iphone12.jpg', 'Apple', 'Black', '1'),
-    ('2', 'Samsung Galaxy Tab S7', 'High-performance tablet from Samsung', 699.99, 30, 'galaxytabs7.jpg', 'Samsung', 'Silver', '2'),
-    ('3', 'Dell XPS 13', 'Ultra-portable laptop with powerful performance', 1299.99, 20, 'xps13.jpg', 'Dell', 'Silver', '1'),
-    ('4', 'Logitech G502 Hero', 'High-precision gaming mouse', 79.99, 10, 'g502hero.jpg', 'Logitech', 'Black', '3'),
-    ('5', 'Sony WH-1000XM4', 'Noise-canceling wireless headphones', 349.99, 15, 'wh1000xm4.jpg', 'Sony', 'Black', '2');
-
+    ('1', 'iPhone 13 Pro', 'Flagship smartphone from Apple with advanced features', 1299.99, 50, 'iphone13pro.jpg', 'Apple', 'Pacific Blue', '1'),
+    ('2', 'Samsung Galaxy S21 Ultra', 'High-end smartphone with a powerful camera system', 1199.99, 30, 'galaxys21ultra.jpg', 'Samsung', 'Phantom Black', '1'),
+    ('3', 'Dell XPS 15', 'Powerful laptop with a stunning display and performance', 1799.99, 20, 'xps15.jpg', 'Dell', 'Silver', '3'),
+    ('4', 'Logitech MX Master 3', 'Advanced wireless mouse for productivity and precision', 99.99, 10, 'mxmaster3.jpg', 'Logitech', 'Graphite', '2'),
+    ('5', 'Sony PlayStation 5', 'Next-generation gaming console with immersive gaming experiences', 499.99, 15, 'playstation5.jpg', 'Sony', 'White', '3'),
+    ('6', 'Samsung 4K QLED TV', 'Ultra HD TV with vibrant colors and lifelike picture quality', 1499.99, 10, 'samsung4kqled.jpg', 'Samsung', 'Black', '2'),
+    ('7', 'Apple MacBook Pro M1', 'Powerful laptop with Apple Silicon chip for enhanced performance', 1599.99, 20, 'macbookprom1.jpg', 'Apple', 'Space Gray', '3'),
+    ('8', 'Bose QuietComfort 35 II', 'Premium noise-canceling headphones for immersive audio experience', 299.99, 25, 'boseqc35ii.jpg', 'Bose', 'Black', '2'),
+    ('9', 'Canon EOS R5', 'Professional mirrorless camera with high-resolution image quality', 3499.99, 5, 'canoneosr5.jpg', 'Canon', 'Black', '3'),
+    ('10', 'Nintendo Switch', 'Hybrid gaming console for gaming on the go and at home', 299.99, 30, 'nintendoswitch.jpg', 'Nintendo', 'Neon Red/Neon Blue', '1'),
+    ('11', 'LG OLED CX Series TV', 'Premium OLED TV with perfect black and stunning contrast', 1999.99, 10, 'lgoledcx.jpg', 'LG', 'Silver', '2'),
+    ('12', 'Microsoft Surface Pro 7', 'Versatile 2-in-1 laptop with a detachable keyboard and touchscreen', 1299.99, 15, 'surfacepro7.jpg', 'Microsoft', 'Platinum', '1'),
+    ('13', 'GoPro HERO9 Black', 'High-quality action camera for capturing adventure moments', 399.99, 10, 'goprohero9.jpg', 'GoPro', 'Black', '3'),
+    ('14', 'Samsung Galaxy Watch 4', 'Smartwatch with fitness tracking and health monitoring features', 299.99, 20, 'galaxywatch4.jpg', 'Samsung', 'Silver', '2'),
+    ('15', 'Sony Alpha a7 III', 'Full-frame mirrorless camera with exceptional image quality', 1999.99, 8, 'sonya7iii.jpg', 'Sony', 'Black', '1'),
+    ('16', 'Apple AirPods Pro', 'Wireless earbuds with active noise cancellation and rich sound', 249.99, 30, 'airpodspro.jpg', 'Apple', 'White', '2'),
+    ('17', 'Lenovo ThinkPad X1 Carbon', 'Premium business laptop with durability and security features', 1699.99, 12, 'thinkpadx1carbon.jpg', 'Lenovo', 'Black', '3'),
+    ('18', 'Fitbit Versa 3', 'Fitness smartwatch with built-in GPS and health tracking capabilities', 229.99, 25, 'fitbitversa3.jpg', 'Fitbit', 'Midnight Blue', '1'),
+    ('19', 'NVIDIA GeForce RTX 3080', 'High-performance graphics card for smooth gaming and rendering', 699.99, 5, 'rtx3080.jpg', 'NVIDIA', 'Black', '3');
 
 
 

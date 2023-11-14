@@ -10,7 +10,7 @@
     <div class="col-lg-6 col-md-8 col-sm-10">
         <form class="d-flex justify-content-center">
             <div class="input-group">
-                <select name="category" class="form-control rounded-0">
+                <select name="category" class="form-control rounded-0" id="categoryFilter">
                     <option value="">Category</option>
                     <option value="phone">Điện thoại</option>
                     <option value="laptop">Laptop</option>
@@ -248,6 +248,36 @@
             });
         }
     })
+
+    $("#categoryFilter").on("change", function() {
+        const selectedCategory = $(this).val();
+        filterProductsByCategory(selectedCategory);
+    });
+
+    function filterProductsByCategory(category) {
+        $.ajax({
+            url: "/category/filter_by_category",
+            type: "GET",
+            data: { category: category },
+            success: function(data) {
+                // Xử lý dữ liệu trả về
+                const template = data.map((product) => {
+                    return `
+                              <div class="card productCart" style="width: 18rem;" data-id="${product.id}">
+                                              <div class="card-body">
+                                                <h5 class="card-title">${product.name}</h5>
+                                                <p class="card-text">${product.description}</p>
+                                              </div>
+                                        </div>
+        `;
+                })
+                $(".cartItems").html(template);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
 </script>
 </body>
 </html>

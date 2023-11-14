@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -56,5 +57,11 @@ public class CategoryService {
             return "success";
         }
         return "failed";
+    }
+    public Collection<Category> filterByCategory(String category) {
+        List<Category> categories = categoryRepository.findAll();
+        return categories.stream()
+                .filter(c -> c.getName().equalsIgnoreCase(category))
+                .collect(Collectors.toList());
     }
 }

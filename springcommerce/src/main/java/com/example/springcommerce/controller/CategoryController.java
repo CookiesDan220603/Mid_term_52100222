@@ -6,10 +6,7 @@ import com.example.springcommerce.model.Category;
 import com.example.springcommerce.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -37,5 +34,9 @@ public class CategoryController {
     @PostMapping("/update")
     public String updateCategory(@RequestBody CategoryRequest request) {
         return categoryService.updateCategory(request);
+    }
+    @GetMapping("/filter_by_category")
+    public Collection<Category> filterByCategory(@RequestParam("category") String category) {
+        return categoryService.filterByCategory(category);
     }
 }
