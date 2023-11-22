@@ -8,10 +8,12 @@
 </head>
 <body>
 <div class="container-fluid text-center">
-    <h1>Welcome to a spring boot project</h1>
-    <a class="h2" th:href="@{/product}">Xem sản phẩm</a>
-    <a class="h2" th:href="@{/cart}">Xem giỏ hàng</a>
-    <a class="h2" th:href="@{/login}">Login</a>
+    <h1>Welcome to a Spring Boot project</h1>
+    <div class="d-flex justify-content-center">
+        <a class="h2 btn btn-primary" th:href="@{/product}" style="margin: 10px;">Xem sản phẩm</a>
+        <a class="h2 btn btn-primary" th:href="@{/cart}" style="margin: 10px;">Xem giỏ hàng</a>
+        <a class="h2 btn btn-primary" th:href="@{/login}" style="margin: 10px;">Login</a>
+    </div>
 </div>
 </body>
 </html>
